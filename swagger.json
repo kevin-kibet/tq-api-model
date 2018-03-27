@@ -1,0 +1,2973 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "description" : "Turnquest APIS",
+    "version" : "1.0.0",
+    "title" : "Turnquest",
+    "contact" : {
+      "email" : "apis@turnkeyafrica.com"
+    }
+  },
+  "externalDocs" : {
+    "description" : "Find out more about Turnquest APIs",
+    "url" : "http://api.turnkeyafrica.com"
+  },
+  "servers" : [ {
+    "description" : "SwaggerHub API Auto Mocking",
+    "url" : "https://virtserver.swaggerhub.com/ta-exchange/Turnquest_APIs/1.0.0"
+  }, {
+    "url" : "http://api.turnkeyafrica.com",
+    "description" : "Live Api"
+  } ],
+  "tags" : [ {
+    "name" : "products",
+    "description" : "Manage Products"
+  }, {
+    "name" : "branches",
+    "description" : "Manage branches"
+  }, {
+    "name" : "clients",
+    "description" : "Manage Clients/Insured/Prospects"
+  }, {
+    "name" : "quotations",
+    "description" : "Create, View, List Quotations"
+  }, {
+    "name" : "policies",
+    "description" : "Create, View, List Policies"
+  }, {
+    "name" : "claims",
+    "description" : "Create, View, List Claims"
+  }, {
+    "name" : "perils",
+    "description" : "Create, View, List Perils"
+  }, {
+    "name" : "intemediaries",
+    "description" : "Manage Intemediaries"
+  }, {
+    "name" : "sub-agents",
+    "description" : "Manage Sub-agents"
+  }, {
+    "name" : "documents",
+    "description" : "Manage documents"
+  }, {
+    "name" : "receipting",
+    "description" : "Receipting"
+  }, {
+    "name" : "user-transactions",
+    "description" : "User Transactions"
+  }, {
+    "name" : "audit-trail",
+    "description" : "Audit trail"
+  }, {
+    "name" : "currencies",
+    "description" : "Currencies"
+  }, {
+    "name" : "setups",
+    "description" : "Setups"
+  } ],
+  "paths" : {
+    "/products" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "Get Products",
+        "operationId" : "getProducts",
+        "parameters" : [ {
+          "name" : "orgCode",
+          "in" : "query",
+          "required" : true,
+          "description" : "Organisation Code",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Products List",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/branches" : {
+      "get" : {
+        "tags" : [ "branches" ],
+        "summary" : "Get Branches",
+        "operationId" : "getBranches",
+        "parameters" : [ {
+          "name" : "userCode",
+          "in" : "query",
+          "required" : true,
+          "description" : "User code",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "orgCode",
+          "in" : "query",
+          "required" : true,
+          "description" : "Organisation code",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Branches",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Branch"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients" : {
+      "post" : {
+        "tags" : [ "clients" ],
+        "summary" : "Create prospect/ client or insured",
+        "operationId" : "createClient",
+        "requestBody" : {
+          "description" : "Customer Object",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateClientRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateClientResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{code}" : {
+      "get" : {
+        "tags" : [ "clients" ],
+        "summary" : "View prospect/client or insured",
+        "operationId" : "viewClient",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Client found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Client"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/intermediaries" : {
+      "post" : {
+        "tags" : [ "intemediaries" ],
+        "summary" : "Create intermediary",
+        "operationId" : "createIntermediary",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateAgentRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Intermediary created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateAgentResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid Input"
+          }
+        }
+      }
+    },
+    "/intermediaries/{code}" : {
+      "put" : {
+        "tags" : [ "intemediaries" ],
+        "summary" : "Update intermediary",
+        "operationId" : "updateIntermediary",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Intermediary code"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateAgentRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Intermediary updated",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateAgentResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid Input"
+          }
+        }
+      }
+    },
+    "/intermediaries/{code}/sub-agents" : {
+      "post" : {
+        "tags" : [ "intemediaries", "sub-agents" ],
+        "summary" : "Create sub-agent",
+        "operationId" : "createSubAgent",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateSubAgentRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Intermediary created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateSubAgentResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid Input"
+          }
+        }
+      }
+    },
+    "/intermediaries/{code}/sub-agents/{subAgentCode}" : {
+      "put" : {
+        "tags" : [ "intemediaries", "sub-agents" ],
+        "summary" : "Update sub-agent",
+        "operationId" : "updateSubAgent",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateSubAgentRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Intermediary created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateSubAgentResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid Input"
+          }
+        }
+      }
+    },
+    "/motor/quotations" : {
+      "post" : {
+        "tags" : [ "quotations" ],
+        "summary" : "Create quotation",
+        "operationId" : "createQuotation",
+        "requestBody" : {
+          "description" : "Quotation Request object to be created",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/QuotationRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Quotation Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/QuotationResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/motor/quotations/{code}" : {
+      "get" : {
+        "tags" : [ "quotations" ],
+        "summary" : "View quotation",
+        "operationId" : "viewQuotation",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "description" : "Code of quote",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Quotation Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Quotation"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Quotation not found"
+          }
+        }
+      }
+    },
+    "/motor/quotations/{code}/generate-policy" : {
+      "post" : {
+        "tags" : [ "quotations" ],
+        "summary" : "Generate policy from quotation",
+        "operationId" : "createPolicy",
+        "requestBody" : {
+          "description" : "GeneratePolicyRequest Object",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/GeneratePolicyRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Policy Generated",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GeneratePolicyResponse"
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/motor/policies/{code}" : {
+      "get" : {
+        "tags" : [ "policies" ],
+        "summary" : "View Policy",
+        "operationId" : "viewPolicy",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "description" : "Policy Code",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Policy Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Policy"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Policy not found"
+          }
+        }
+      }
+    },
+    "/motor/policies/{code}/risks" : {
+      "get" : {
+        "tags" : [ "policies" ],
+        "summary" : "View Policy Risks",
+        "operationId" : "viewPolicyRisks",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "description" : "Policy Code",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Policy Risks Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/PolicyRisk"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/motor/policies/{code}/risks/{riskCode}" : {
+      "get" : {
+        "tags" : [ "policies" ],
+        "summary" : "View Policy Risk",
+        "operationId" : "viewPolicyRisk",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "description" : "Policy Code",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "riskCode",
+          "in" : "path",
+          "description" : "Risk Code",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Policy Risk Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PolicyRisk"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/motor/policies/{code}/reinsurance-placement" : {
+      "post" : {
+        "tags" : [ "policies" ],
+        "summary" : "View Reinsurance Placement",
+        "operationId" : "viewReinsurancePlacement",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "description" : "Policy Batch number",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PolicyRiskReinsurancePlacementRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Policy Reinsurance Placement Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PolicyRiskReinsurancePlacement"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Risk not found"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/motor/policies/{code}/coinsurance-apportionment" : {
+      "post" : {
+        "tags" : [ "policies" ],
+        "summary" : "Retrieve Policy Coinsurance Apportionment",
+        "operationId" : "viewPolicyCoinsuranceApportionment",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "description" : "Policy Batch number",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PolicyCoinsuranceApportionmentRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Policy Coinsurance Apportionment Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PolicyCoinsuranceApportionment"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Risk not found"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/motor/policies/{code}/document" : {
+      "get" : {
+        "tags" : [ "policies" ],
+        "summary" : "View client policy documens in DMS",
+        "operationId" : "viewPolicyDocument",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "description" : "Policy code"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Policy document found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DocumentResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/motor/policies/search" : {
+      "post" : {
+        "tags" : [ "policies" ],
+        "summary" : "Search policies",
+        "operationId" : "searchPolicies",
+        "requestBody" : {
+          "description" : "Polices Search Request",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PoliciesSearchRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Policies Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Policy"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/motor/policies/{code}/renew" : {
+      "post" : {
+        "tags" : [ "policies" ],
+        "summary" : "Renew policy",
+        "operationId" : "renewPolicy",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "required" : true,
+          "description" : "Policy Batch No.",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Policy Renewal Request",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PolicyRenewalRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Policy Renewed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PolicyRenewalResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/motor/policies/{code}/endorse" : {
+      "post" : {
+        "tags" : [ "policies" ],
+        "summary" : "Generate policy endorsement",
+        "operationId" : "generatePolicyEndorsement",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Polices Endorsement Request",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PolicyEndorsementRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Policy Endorsement Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PolicyEndorsementResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/motor/policies/{code}/annivarsary" : {
+      "get" : {
+        "tags" : [ "policies" ],
+        "summary" : "View Policy Annivarsary",
+        "operationId" : "viewPolicyAnnivarsary",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Policy Annivarsary",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/PolicyAnnivarsary"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/motor/policies/{code}/reinstate" : {
+      "post" : {
+        "tags" : [ "policies" ],
+        "summary" : "Reinstate of lapsed/cancelled policy",
+        "operationId" : "reinstatePolicy",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Polices Reinstatement Request",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PolicyReinstatementRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Policy Found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PolicyReinstatementResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/motor/claims" : {
+      "post" : {
+        "tags" : [ "claims" ],
+        "summary" : "Generate Claim",
+        "operationId" : "generateClaim",
+        "description" : "Test",
+        "requestBody" : {
+          "description" : "Generate claim request",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ClaimRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Claim generated",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ClaimResponse"
+                }
+              }
+            }
+          },
+          "405" : {
+            "description" : "Invalid input"
+          }
+        }
+      },
+      "get" : {
+        "tags" : [ "claims" ],
+        "summary" : "View Claims",
+        "operationId" : "viewClaims",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Claim"
+                  }
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/motor/claims/{code}" : {
+      "get" : {
+        "tags" : [ "claims" ],
+        "summary" : "View claim",
+        "operationId" : "viewClaim",
+        "parameters" : [ {
+          "name" : "code",
+          "required" : true,
+          "in" : "path",
+          "description" : "Claim Code",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Claim"
+                }
+              }
+            },
+            "description" : "Claim found"
+          },
+          "404" : {
+            "description" : "Claim not found"
+          }
+        }
+      }
+    },
+    "/motor/claims/{code}/documents" : {
+      "get" : {
+        "tags" : [ "claims" ],
+        "summary" : "View claim documents",
+        "operationId" : "viewClaimDocuments",
+        "parameters" : [ {
+          "name" : "code",
+          "required" : true,
+          "in" : "path",
+          "description" : "Claim Code",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/DocumentResponse"
+                  }
+                }
+              }
+            },
+            "description" : "Claim documents"
+          }
+        }
+      }
+    },
+    "/perils/{subClassCode}" : {
+      "get" : {
+        "tags" : [ "perils" ],
+        "summary" : "List of claims",
+        "operationId" : "viewClaims",
+        "parameters" : [ {
+          "name" : "subClassCode",
+          "required" : true,
+          "in" : "path",
+          "description" : "SubClass code",
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Peril"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documents/upload" : {
+      "post" : {
+        "tags" : [ "documents" ],
+        "summary" : "UploadDocument",
+        "operationId" : "uploadDocument",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/DocumentUploadRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DocumentResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/receipting/navision" : {
+      "post" : {
+        "tags" : [ "receipting" ],
+        "summary" : "Receipt payments from Navision system",
+        "operationId" : "navisionReceipting",
+        "requestBody" : {
+          "description" : "Navision receipting request",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NavisionReceiptingRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ReceiptingResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/user-transactions/{userCode}/pending" : {
+      "get" : {
+        "tags" : [ "user-transactions" ],
+        "summary" : "Get pending approvals per user",
+        "operationId" : "getUserPendingTransactions",
+        "parameters" : [ {
+          "name" : "userCode",
+          "in" : "path",
+          "description" : "User code",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/UserTransaction"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user-transactions/{code}/approve" : {
+      "patch" : {
+        "tags" : [ "user-transactions" ],
+        "summary" : "Approve user transaction",
+        "operationId" : "approveUserPendingTransactions",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "description" : "User transaction code",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Approve User Transaction Request",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ApproveUserTransactionRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserTransaction"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/audit-trail" : {
+      "post" : {
+        "tags" : [ "audit-trail" ],
+        "summary" : "View core transactions audit trail",
+        "operationId" : "viewAuditTrail",
+        "requestBody" : {
+          "description" : "Audit trail request",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AuditTrailRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AuditTrail"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/setups/currencies/exchange-rate" : {
+      "post" : {
+        "tags" : [ "currencies", "setups" ],
+        "summary" : "Update exchange rate daily",
+        "operationId" : "updateExchangeRate",
+        "requestBody" : {
+          "description" : "Update Exchange Rate request",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateExchangeRateRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UpdateExchangeRateResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/setups/reinsurance/treaties/find" : {
+      "post" : {
+        "tags" : [ "setups" ],
+        "summary" : "View Reinsurance setup",
+        "operationId" : "retreiveReinsuranceTreatySetup",
+        "requestBody" : {
+          "description" : "Treaty request",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/TreatyRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Treaty"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Treaty not found"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "securitySchemes" : {
+      "BearerAuth" : {
+        "type" : "http",
+        "scheme" : "bearer"
+      },
+      "ApiKeyAuth" : {
+        "type" : "apiKey",
+        "in" : "header",
+        "name" : "X-API-Key"
+      },
+      "OAuth2" : {
+        "type" : "oauth2",
+        "flows" : {
+          "authorizationCode" : {
+            "authorizationUrl" : "https://example.com/oauth/authorize",
+            "tokenUrl" : "https://example.com/oauth/token",
+            "scopes" : {
+              "read" : "Grants read access",
+              "write" : "Grants write access",
+              "admin" : "Grants access to admin operations"
+            }
+          }
+        }
+      }
+    },
+    "schemas" : {
+      "Product" : {
+        "type" : "object",
+        "properties" : {
+          "productCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Product code"
+          },
+          "productDesc" : {
+            "type" : "string",
+            "description" : "Product description"
+          },
+          "productShtDesc" : {
+            "type" : "string",
+            "description" : "Product short description"
+          },
+          "bindCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Product binder code"
+          },
+          "coverTypeCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Cover type code"
+          },
+          "coverTypeDesc" : {
+            "type" : "string",
+            "description" : "Cover type description"
+          }
+        }
+      },
+      "Branch" : {
+        "type" : "object",
+        "properties" : {
+          "brnCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Branch code assigned by the system"
+          },
+          "brnName" : {
+            "type" : "string",
+            "description" : "Branch name"
+          },
+          "brnShortDesc" : {
+            "type" : "string",
+            "description" : "Branch short description"
+          },
+          "brnDesc" : {
+            "type" : "string",
+            "description" : "Branch description"
+          },
+          "code" : {
+            "type" : "string",
+            "description" : "Branch code"
+          }
+        }
+      },
+      "Client" : {
+        "type" : "object",
+        "properties" : {
+          "accountNo" : {
+            "type" : "string",
+            "description" : "Client bank account number"
+          },
+          "bankBranch" : {
+            "type" : "string",
+            "description" : "Client bank branch"
+          },
+          "business" : {
+            "type" : "string",
+            "description" : "Client business activities"
+          },
+          "clntDob" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Client Date of birth"
+          },
+          "code" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Client code"
+          },
+          "countryCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Country code"
+          },
+          "countryName" : {
+            "type" : "string",
+            "description" : "Country name"
+          },
+          "createdBy" : {
+            "type" : "string",
+            "description" : "System user assigned to create clients"
+          },
+          "dateCreated" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "directClient" : {
+            "type" : "string",
+            "description" : "If it's a direct client"
+          },
+          "loadedBy" : {
+            "type" : "string",
+            "description" : "In case of client loading, the user who loaded the clients in the system"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Client name"
+          },
+          "postalAddress" : {
+            "type" : "string",
+            "description" : "Client's postal addres"
+          },
+          "emailAddress" : {
+            "type" : "string",
+            "description" : "Client's email address"
+          },
+          "shortDesc" : {
+            "type" : "string",
+            "description" : "Client's short description"
+          },
+          "title" : {
+            "type" : "string",
+            "description" : "Client's title"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "Client status",
+            "enum" : [ "Active", "Inactive" ]
+          },
+          "surname" : {
+            "type" : "string",
+            "description" : "Clients surname"
+          },
+          "smsTelNo" : {
+            "type" : "string",
+            "description" : "Client's SMS mobile number"
+          },
+          "telNo" : {
+            "type" : "string",
+            "description" : "Client's telephone number"
+          },
+          "townCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Town code"
+          },
+          "townName" : {
+            "type" : "string",
+            "description" : "Town name"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Client type",
+            "enum" : [ "Coorporate", "Individual" ]
+          },
+          "wef" : {
+            "type" : "string",
+            "description" : "With effect from date of creation"
+          }
+        }
+      },
+      "CreateClientRequest" : {
+        "type" : "object",
+        "properties" : {
+          "idNumber" : {
+            "type" : "integer",
+            "format" : "int32",
+            "description" : "Customer ID number"
+          },
+          "passportNumber" : {
+            "type" : "string",
+            "description" : "Customer passport number"
+          },
+          "tinNumber" : {
+            "type" : "string",
+            "description" : "Customer Tax Identification Number"
+          },
+          "title" : {
+            "type" : "string",
+            "description" : "Customer title"
+          },
+          "branch" : {
+            "type" : "integer",
+            "description" : "Customer branch code"
+          },
+          "mobileNumber" : {
+            "type" : "string",
+            "description" : "Customer mobile number"
+          },
+          "telephoneNumber" : {
+            "type" : "string",
+            "description" : "Customer telephone number"
+          },
+          "emailAddress" : {
+            "type" : "string",
+            "description" : "Customer email address"
+          },
+          "dateOfBirth" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Customer date of birth"
+          },
+          "fullNames" : {
+            "type" : "string",
+            "description" : "Customer full names"
+          },
+          "postalAddress" : {
+            "type" : "string",
+            "description" : "Customer postal address"
+          },
+          "postalCode" : {
+            "type" : "integer",
+            "format" : "int32",
+            "description" : "Postal code"
+          },
+          "gender" : {
+            "type" : "string",
+            "description" : "Customer gender"
+          },
+          "countryShortDesc" : {
+            "type" : "string",
+            "description" : "Country short desc. e.g KE for Kenya"
+          },
+          "sector" : {
+            "type" : "string",
+            "description" : "Customer's economic sector"
+          },
+          "occupation" : {
+            "type" : "string",
+            "description" : "Customer's occupation"
+          },
+          "username" : {
+            "type" : "string",
+            "description" : "Username of third party system"
+          },
+          "userCode" : {
+            "type" : "integer",
+            "description" : "User code for the web client"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "Type of customer",
+            "enum" : [ "Client", "Prospect", "Insured" ]
+          },
+          "clientType" : {
+            "type" : "string",
+            "description" : "Client Type",
+            "enum" : [ "Cooperate", "Individual" ]
+          }
+        },
+        "required" : [ "telephoneNumber", "fullNames", "userCode", "clientType", "countryShortDesc", "mobileNumber" ]
+      },
+      "CreateClientResponse" : {
+        "type" : "object",
+        "properties" : {
+          "clientCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Unique code assigned to the created client"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Request status message"
+          }
+        }
+      },
+      "Quotation" : {
+        "type" : "object",
+        "properties" : {
+          "bindCode" : {
+            "type" : "integer",
+            "description" : "Product binder code",
+            "format" : "int64"
+          },
+          "clientCode" : {
+            "type" : "integer",
+            "description" : "Client code",
+            "format" : "int64"
+          },
+          "clientName" : {
+            "type" : "string",
+            "description" : "Client name"
+          },
+          "clientType" : {
+            "type" : "string",
+            "description" : "Client type"
+          },
+          "currencyCode" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "currencyDesc" : {
+            "type" : "string",
+            "description" : "Currency description KSHS, USD"
+          },
+          "currencyRate" : {
+            "type" : "number",
+            "description" : "Currency Exchange rate"
+          },
+          "expiryDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "fromDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "premium" : {
+            "type" : "number"
+          },
+          "preparedBy" : {
+            "type" : "string",
+            "description" : "User preparing the quote"
+          },
+          "productCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Product Code e.g 7700"
+          },
+          "productDesc" : {
+            "type" : "string",
+            "description" : "Product description e.g Motor Product"
+          },
+          "productExpiryPeriod" : {
+            "type" : "string"
+          },
+          "productShtDesc" : {
+            "type" : "string"
+          },
+          "qpCode" : {
+            "type" : "number",
+            "description" : "Quotation Product Code"
+          },
+          "quotationCode" : {
+            "type" : "number",
+            "description" : "Quotation Code"
+          },
+          "quotationNumber" : {
+            "type" : "number",
+            "description" : "Quotation Code"
+          },
+          "quoteCurrency" : {
+            "type" : "string"
+          },
+          "quotePreparedDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "risks" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/QuotationRisk"
+            }
+          },
+          "status" : {
+            "type" : "string",
+            "enum" : [ "Active", "Inactive" ]
+          }
+        }
+      },
+      "QuotationRequest" : {
+        "type" : "object",
+        "properties" : {
+          "userCode" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "coverFromDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "coverToDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "agntCode" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "bindCode" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "clientCode" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "clntType" : {
+            "type" : "string",
+            "description" : "Client Type",
+            "enum" : [ "C", "I" ]
+          },
+          "branchCode" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "currCode" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "productCode" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "fixedXchangeRate" : {
+            "type" : "string",
+            "description" : "If currency rate is fixed or not"
+          },
+          "xchangerate" : {
+            "type" : "integer",
+            "description" : "Currency Exchange Rate"
+          },
+          "riskDetails" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/QuotationRiskRequest"
+            }
+          }
+        }
+      },
+      "QuotationRiskRequest" : {
+        "type" : "object",
+        "properties" : {
+          "riskId" : {
+            "type" : "string"
+          },
+          "riskDescription" : {
+            "type" : "string"
+          },
+          "riskSections" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RiskSection"
+            }
+          }
+        }
+      },
+      "QuotationResponse" : {
+        "type" : "object",
+        "properties" : {
+          "quoteNo" : {
+            "type" : "string",
+            "description" : "Quotation Number"
+          },
+          "premium" : {
+            "type" : "integer",
+            "description" : "Total Premium amount"
+          }
+        }
+      },
+      "QuotationRisk" : {
+        "type" : "object",
+        "properties" : {
+          "riskCode" : {
+            "type" : "integer",
+            "description" : "Risk Code"
+          },
+          "riskId" : {
+            "type" : "string",
+            "description" : "Risk ID eg. KAA 111J"
+          },
+          "riskDescription" : {
+            "type" : "string",
+            "description" : "Risk Description e.g Toyota"
+          },
+          "riskSections" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RiskSection"
+            }
+          }
+        }
+      },
+      "RiskSection" : {
+        "type" : "object",
+        "properties" : {
+          "riskSectionCode" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "riskSectionSectCode" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      },
+      "GeneratePolicyRequest" : {
+        "type" : "object",
+        "properties" : {
+          "coin" : {
+            "type" : "string",
+            "description" : "If it's a coinsurance policy",
+            "enum" : [ "Y", "N" ]
+          },
+          "coinLeader" : {
+            "type" : "string",
+            "description" : "If it's a coinsurance leading or follower",
+            "enum" : [ "Y", "N" ]
+          },
+          "coinGross" : {
+            "type" : "string",
+            "description" : "If it's a coinsurance gross or net",
+            "enum" : [ "Y", "N" ]
+          },
+          "coinPercentage" : {
+            "type" : "number",
+            "maximum" : 100,
+            "minimum" : 0,
+            "description" : "Own coinsurance percentage share"
+          },
+          "renewable" : {
+            "type" : "string",
+            "enum" : [ "Y", "N" ],
+            "description" : "If the policy is renewable or not"
+          },
+          "quoteCode" : {
+            "type" : "number",
+            "description" : "Quotation code"
+          }
+        },
+        "required" : [ "quoteCode", "renewable" ]
+      },
+      "GeneratePolicyResponse" : {
+        "properties" : {
+          "policyNo" : {
+            "type" : "string",
+            "description" : "Policy Number generated by the system"
+          },
+          "netPremium" : {
+            "type" : "number",
+            "description" : "Net premium to be paid"
+          },
+          "receiptAmount" : {
+            "type" : "number",
+            "description" : "Amount to be receipted"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Status Message",
+            "example" : [ "Policy generated successfully" ]
+          }
+        }
+      },
+      "Policy" : {
+        "properties" : {
+          "clientName" : {
+            "type" : "string",
+            "description" : "Client Name"
+          },
+          "clientCode" : {
+            "type" : "number",
+            "description" : "Client Code"
+          },
+          "fromDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Policy with effect from to date"
+          },
+          "toDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Policy with effect to date"
+          },
+          "netPremium" : {
+            "type" : "number",
+            "description" : "Policy Net premium"
+          },
+          "polPremBalAmt" : {
+            "type" : "number",
+            "description" : "Policy Balance amount"
+          },
+          "polDrCrNo" : {
+            "type" : "string",
+            "description" : "Policy Debit/Credit number"
+          },
+          "policyBatchNumber" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Policy unique number"
+          },
+          "subClassCode" : {
+            "type" : "integer",
+            "description" : "Policy Sub class code",
+            "format" : "int64"
+          },
+          "policyCurrentStatus" : {
+            "type" : "string",
+            "description" : "Policy current status"
+          },
+          "policyDatePrepared" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Policy created/prepared date"
+          },
+          "policyPaymentStatus" : {
+            "type" : "string",
+            "description" : "Policy payment status"
+          },
+          "policyStatus" : {
+            "type" : "string",
+            "description" : "Policy status"
+          },
+          "preparedBy" : {
+            "type" : "string",
+            "description" : "User who created/ prepared the policy"
+          },
+          "productDescription" : {
+            "type" : "string",
+            "description" : "Product description"
+          },
+          "renewalDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Policy renewal date"
+          },
+          "sumAssured" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Risk sum assured amount"
+          },
+          "totalPremium" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Policy total premium"
+          },
+          "uwYear" : {
+            "type" : "string",
+            "description" : "Year of policy underwriting"
+          },
+          "riskDetails" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PolicyRisk"
+            }
+          },
+          "debitNote" : {
+            "type" : "string",
+            "description" : "Policy debit note number"
+          },
+          "receiptNo" : {
+            "type" : "string",
+            "description" : "Receipt number. Can  be null if not allocated"
+          },
+          "endorsementDetails" : {
+            "type" : "string",
+            "description" : "Array of all endorsements done on the policy"
+          }
+        }
+      },
+      "PoliciesSearchRequest" : {
+        "type" : "object",
+        "properties" : {
+          "userName" : {
+            "type" : "string",
+            "description" : "Username to authenticate session details"
+          },
+          "agentCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Agent Code"
+          },
+          "productCode" : {
+            "type" : "integer",
+            "description" : "Product code",
+            "format" : "int64"
+          },
+          "riskId" : {
+            "type" : "string",
+            "description" : "Insured property id"
+          },
+          "policySearchDateFrom" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "policySearchDateTo" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "policyStatus" : {
+            "type" : "string",
+            "description" : "Policy status",
+            "enum" : [ "active", "lapsed", "elapsed" ]
+          }
+        },
+        "required" : [ "userName" ]
+      },
+      "PolicyRisk" : {
+        "type" : "object",
+        "properties" : {
+          "riskCode" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "riskId" : {
+            "type" : "string",
+            "description" : "Risk Identifier e.g KAA 111A"
+          },
+          "riskDescription" : {
+            "type" : "string",
+            "description" : "Risk description e.g Toyota"
+          },
+          "riskSections" : {
+            "type" : "array",
+            "$ref" : "#/components/schemas/RiskSection"
+          }
+        }
+      },
+      "PolicyEndorsementRequest" : {
+        "type" : "object",
+        "properties" : {
+          "userName" : {
+            "type" : "string",
+            "description" : "Username to authenticate session details"
+          },
+          "policyNumber" : {
+            "type" : "string",
+            "description" : "Policy Number"
+          },
+          "effectiveDt" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "dateTo" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "endorsmarks" : {
+            "type" : "string",
+            "description" : "Endorsement Remarks"
+          },
+          "endorseType" : {
+            "type" : "string",
+            "description" : "Endorsement Type"
+          },
+          "riskDetails" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PolicyRisk"
+            }
+          }
+        },
+        "required" : [ "policyNumber", "effectiveDt", "dateTo", "userName", "endorsRemarks", "endorseType" ]
+      },
+      "PolicyEndorsementResponse" : {
+        "type" : "object",
+        "properties" : {
+          "policyNumber" : {
+            "type" : "string",
+            "description" : "Policy Number"
+          },
+          "endorsementNumber" : {
+            "type" : "string",
+            "description" : "Endorsement Number"
+          }
+        }
+      },
+      "PolicyRenewalRequest" : {
+        "type" : "object",
+        "properties" : {
+          "policyNumber" : {
+            "type" : "string",
+            "description" : "Policy Number"
+          },
+          "renewalType" : {
+            "type" : "string",
+            "description" : "Renewal type. With or without ammendments. If with ammendments, you can add, edit or delete risk details"
+          },
+          "riskDetails" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PolicyRisk"
+            }
+          }
+        },
+        "required" : [ "policyNumber", "renewalType" ]
+      },
+      "PolicyRenewalResponse" : {
+        "type" : "object",
+        "properties" : {
+          "polBatchNo" : {
+            "type" : "integer",
+            "description" : "Unique policy transaction number",
+            "format" : "int64"
+          },
+          "premium" : {
+            "type" : "number",
+            "format" : "float",
+            "description" : "Total premium"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Status message"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "Returns draft status"
+          }
+        }
+      },
+      "PolicyAnnivarsary" : {
+        "type" : "object",
+        "properties" : {
+          "polWEFDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Policy with effect from date"
+          },
+          "polWETDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Policy with effect to date"
+          },
+          "riskDetails" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PolicyRisk"
+            }
+          }
+        }
+      },
+      "PolicyReinstatementRequest" : {
+        "type" : "object",
+        "properties" : {
+          "effectiveDt" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "endorsType" : {
+            "type" : "string",
+            "description" : "Endorsment type",
+            "enum" : [ "Reinstatement" ]
+          },
+          "endorsRemarks" : {
+            "type" : "string",
+            "description" : "Endorsement remarks"
+          }
+        }
+      },
+      "PolicyReinstatementResponse" : {
+        "type" : "object",
+        "properties" : {
+          "policyNumber" : {
+            "type" : "string",
+            "description" : "Policy number"
+          },
+          "endorsementNumber" : {
+            "type" : "string",
+            "description" : "Endorsement number"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Policy status",
+            "example" : "Active,  Inactive"
+          }
+        }
+      },
+      "PolicyRiskReinsurancePlacementRequest" : {
+        "type" : "object",
+        "properties" : {
+          "riskId" : {
+            "type" : "string",
+            "description" : "Risk unique identifier"
+          },
+          "riskUwYear" : {
+            "type" : "integer",
+            "description" : "Risk underwriting year"
+          }
+        },
+        "required" : [ "riskId", "riskUwYear" ]
+      },
+      "PolicyRiskReinsurancePlacement" : {
+        "type" : "object",
+        "properties" : {
+          "clientName" : {
+            "type" : "string",
+            "description" : "Client name"
+          },
+          "endorsmentNo" : {
+            "type" : "string",
+            "description" : "Policy endorsement number"
+          },
+          "fromDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Risk with effect from date"
+          },
+          "premium" : {
+            "type" : "number",
+            "format" : "float",
+            "description" : "Risk net premium"
+          },
+          "riskSumInsured" : {
+            "type" : "number",
+            "format" : "float",
+            "description" : "Risk sum insured or maximum exposure"
+          },
+          "retRate" : {
+            "type" : "number",
+            "format" : "double",
+            "description" : "Company retention rate"
+          },
+          "reSi" : {
+            "type" : "number",
+            "format" : "float",
+            "description" : "Company retention SI"
+          },
+          "retPremium" : {
+            "type" : "number",
+            "format" : "float",
+            "description" : "Company retention premium"
+          },
+          "treatyRate" : {
+            "type" : "number",
+            "format" : "double",
+            "description" : "Treaty ceding rate"
+          },
+          "treatySi" : {
+            "type" : "number",
+            "format" : "float",
+            "description" : "Treaty sum insured"
+          },
+          "treatyPremium" : {
+            "type" : "number",
+            "format" : "float",
+            "description" : "Treaty premium"
+          },
+          "treatyCom" : {
+            "type" : "number",
+            "format" : "float",
+            "description" : "Treaty premium"
+          },
+          "farceSi" : {
+            "type" : "number",
+            "format" : "float",
+            "description" : "Farce sum insured"
+          },
+          "farceRate" : {
+            "type" : "number",
+            "format" : "double",
+            "description" : "Farce ceding rate"
+          },
+          "farcePremium" : {
+            "type" : "number",
+            "format" : "float",
+            "description" : "Farce total premium"
+          },
+          "farceCom" : {
+            "type" : "number",
+            "format" : "float",
+            "description" : "Farce commision"
+          },
+          "clientCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Client code"
+          }
+        }
+      },
+      "PolicyCoinsuranceApportionmentRequest" : {
+        "type" : "object",
+        "properties" : {
+          "clientCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Client code"
+          },
+          "productCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Product code"
+          },
+          "polSearchType" : {
+            "type" : "string",
+            "description" : "Policy search type"
+          },
+          "policySearchDateFrom" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Policy date from"
+          },
+          "policySearchDateTo" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Policy search date to"
+          }
+        }
+      },
+      "PolicyCoinsuranceApportionment" : {
+        "type" : "object",
+        "properties" : {
+          "coinPartName" : {
+            "type" : "string",
+            "description" : "Coinsurance participant name"
+          },
+          "coinPercentage" : {
+            "type" : "integer",
+            "format" : "int16",
+            "description" : "Coinsurance participant percentage share"
+          },
+          "coinPartSumInsured" : {
+            "type" : "number",
+            "format" : "float",
+            "description" : "Coinsurance participant sum insured share"
+          },
+          "coinPartPrem" : {
+            "type" : "number",
+            "format" : "float",
+            "description" : "Coinsurance participant premium insured share"
+          },
+          "coinORCRate" : {
+            "type" : "number",
+            "format" : "double",
+            "description" : "Coinsurance participant ORC rate"
+          },
+          "coinORCAmnt" : {
+            "type" : "number",
+            "format" : "float",
+            "description" : "Coinsurance participant ORC amount share"
+          },
+          "coinCommision" : {
+            "type" : "number",
+            "format" : "float",
+            "description" : "Coinsurance participant commission share"
+          }
+        }
+      },
+      "DocumentResponse" : {
+        "type" : "object",
+        "properties" : {
+          "actualName" : {
+            "type" : "string",
+            "description" : "Document name"
+          },
+          "dateCreated" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Date document was created in the system"
+          },
+          "dateReceived" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Date document was received"
+          },
+          "docType" : {
+            "type" : "string",
+            "description" : "Document type e.g PDF, word"
+          },
+          "modifiedBy" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Date document was modified"
+          },
+          "document" : {
+            "type" : "string",
+            "description" : "The actual document in base64 string format"
+          },
+          "versionLabel" : {
+            "type" : "string",
+            "description" : "Document version"
+          }
+        }
+      },
+      "ClaimRequest" : {
+        "type" : "object",
+        "properties" : {
+          "riskId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "lossDesc" : {
+            "type" : "string",
+            "description" : "Loss Description"
+          },
+          "peril" : {
+            "type" : "string",
+            "description" : "Peril insured"
+          },
+          "perilAmnt" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Peril/Claimed Amount"
+          },
+          "location" : {
+            "type" : "string",
+            "description" : "Location of loss/accident"
+          },
+          "driver" : {
+            "type" : "string",
+            "description" : "Driver/Insured"
+          },
+          "lossDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Claim loss date"
+          },
+          "lossTime" : {
+            "type" : "string",
+            "format" : "time",
+            "description" : "Claim loss time"
+          },
+          "notDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Claim reporting date"
+          },
+          "policyNo" : {
+            "type" : "string",
+            "description" : "Policy No"
+          }
+        }
+      },
+      "ClaimResponse" : {
+        "type" : "object",
+        "properties" : {
+          "claimNo" : {
+            "type" : "string",
+            "description" : "Claim reference number generated"
+          },
+          "ticketNo" : {
+            "type" : "string",
+            "description" : "Turnquest GIS claim ticket generated"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Request status"
+          }
+        }
+      },
+      "Claim" : {
+        "type" : "object",
+        "properties" : {
+          "claimNumber" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Claim number"
+          },
+          "claimRefNo" : {
+            "type" : "string",
+            "description" : "Claim reference number"
+          },
+          "claimAmount" : {
+            "type" : "number",
+            "description" : "Claim Amount"
+          },
+          "claimPaymentDetails" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ClaimPayment"
+            }
+          },
+          "expenseAmount" : {
+            "type" : "number",
+            "description" : "Claim Expense amount"
+          },
+          "desription" : {
+            "type" : "string",
+            "description" : "Claim description details"
+          },
+          "ipuPropertyCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Risk code"
+          },
+          "lossDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Claim loss date"
+          },
+          "notifiedDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Claim notification date"
+          },
+          "proCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Product code"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "Claim status",
+            "enum" : [ "Paid", "Cancelled" ]
+          }
+        }
+      },
+      "ClaimPayment" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "description" : "Claim payment code"
+          }
+        }
+      },
+      "Peril" : {
+        "type" : "object",
+        "properties" : {
+          "perilId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "perilDescription" : {
+            "type" : "string",
+            "description" : "Peril Description"
+          }
+        }
+      },
+      "CreateAgentRequest" : {
+        "type" : "object",
+        "properties" : {
+          "agnIntermediaryType" : {
+            "type" : "string",
+            "description" : "Intermediary account type",
+            "enum" : [ "Agent", "Broker" ]
+          },
+          "agnName" : {
+            "type" : "string",
+            "description" : "Agent name"
+          },
+          "agnPhysicalAddress" : {
+            "type" : "string",
+            "description" : "Agent physical address"
+          },
+          "agnPostalAddress" : {
+            "type" : "string",
+            "description" : "Agent physical address"
+          },
+          "agnTownCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Agent town code"
+          },
+          "agnCouCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Agent country code"
+          },
+          "agnEmailAddress" : {
+            "type" : "string",
+            "description" : "Agent email address"
+          },
+          "agnWebAddress" : {
+            "type" : "string",
+            "description" : "Agent web address"
+          },
+          "agnZip" : {
+            "type" : "string",
+            "description" : "Agent zip address"
+          },
+          "agnContactPerson" : {
+            "type" : "string",
+            "description" : "Agent contact person"
+          },
+          "agnContactTitle" : {
+            "type" : "string",
+            "description" : "Agent contact title e.g Dr."
+          },
+          "agnTel1" : {
+            "type" : "string",
+            "description" : "Agent telephone number"
+          },
+          "agnTel2" : {
+            "type" : "string",
+            "description" : "Agent telephone number"
+          },
+          "agnFax" : {
+            "type" : "string",
+            "description" : "Agent fax address"
+          },
+          "agnAccNo" : {
+            "type" : "integer",
+            "description" : "Agent bank account number"
+          },
+          "agnPin" : {
+            "type" : "string",
+            "description" : "Agent KRA Pin"
+          },
+          "agnAgentCommission" : {
+            "type" : "number",
+            "description" : "Agent commission agreed"
+          },
+          "agnCreditAllowed" : {
+            "type" : "string",
+            "description" : "Agent credit allowed",
+            "enum" : [ "Y", "N" ]
+          },
+          "agnAgentWhtTax" : {
+            "type" : "number",
+            "description" : "Agent withholding tax amount"
+          },
+          "agnPrintDbNote" : {
+            "type" : "string",
+            "description" : "Agent print debit note",
+            "enum" : [ "Y", "N" ]
+          },
+          "agnCommReserveRate" : {
+            "type" : "number",
+            "description" : "Agent commission reserve"
+          },
+          "agnAnnualBudget" : {
+            "type" : "number",
+            "description" : "Agent annual budget"
+          },
+          "agnStatusEffDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Effective date for agent"
+          },
+          "agnTown" : {
+            "type" : "string",
+            "description" : "Agent town"
+          },
+          "agnCountry" : {
+            "type" : "string",
+            "description" : "Agent country"
+          },
+          "agnIdNo" : {
+            "type" : "string",
+            "description" : "Agent national Id number"
+          },
+          "agnExpiryDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Agent expiry date"
+          },
+          "agnLicenseNo" : {
+            "type" : "string",
+            "description" : "Agent license number"
+          }
+        },
+        "required" : [ "agnIntermediaryType", "agnName", "agnPhysicalAddress", "agnCouCode", "agnEmailAddress", "agnContactPerson", "agnTel1", "agnAccNo", "agnPin", "agnStatusEffDate", "agnLicenseNo", "agnIdNo", "agnCountry", "agnTown" ]
+      },
+      "CreateAgentResponse" : {
+        "type" : "object",
+        "properties" : {
+          "agentCode" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Status message"
+          }
+        }
+      },
+      "CreateSubAgentRequest" : {
+        "type" : "object",
+        "properties" : {
+          "subAgentName" : {
+            "type" : "string",
+            "description" : "Sub- agent name"
+          },
+          "subAgentPhysicalAddress" : {
+            "type" : "string",
+            "description" : "Sub- agent physical address"
+          },
+          "subAgentPostalAddress" : {
+            "type" : "string",
+            "description" : "Sub-agent postal address"
+          },
+          "subAgentTwnCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Sub-agent town code"
+          },
+          "subAgentCouCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Sub-agent country code"
+          },
+          "subAgentEmailAddress" : {
+            "type" : "string",
+            "description" : "Sub-agent email address"
+          },
+          "subAgentWebAddress" : {
+            "type" : "string",
+            "description" : "Sub-agent web address"
+          },
+          "subAgentZip" : {
+            "type" : "string",
+            "description" : "Sub-agent zip address"
+          },
+          "subAgentContactPerson" : {
+            "type" : "string",
+            "description" : "Sub-agent contact person"
+          },
+          "subAgentContactTitle" : {
+            "type" : "string",
+            "description" : "Sub-agent contact title",
+            "example" : "Dr, Mr"
+          },
+          "subAgentTel1" : {
+            "type" : "string",
+            "description" : "Sub-agent telephone number"
+          },
+          "subAgentTel2" : {
+            "type" : "string",
+            "description" : "Sub-agent telephone number"
+          },
+          "subAgentFax" : {
+            "type" : "string",
+            "description" : "Sub-agent fax address"
+          },
+          "subAgentBankAccNo" : {
+            "type" : "string",
+            "description" : "Sub-agent bank account number"
+          },
+          "subAgentTin" : {
+            "type" : "string",
+            "description" : "Sub-agent Tax Identification Number"
+          },
+          "subAgentStatusEffFromDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Sub-agent effective from date"
+          },
+          "subAgentEffToDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "SUb-agent effective to date"
+          }
+        },
+        "required" : [ "subAgentName", "subAgentCouCode", "subAgentEmailAddress", "subAgentContactPerson", "subAgentTel1", "subAgentBankAccountNo", "subAgentStatusEffFromDate" ]
+      },
+      "CreateSubAgentResponse" : {
+        "type" : "object",
+        "properties" : {
+          "agentCode" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Status message"
+          }
+        }
+      },
+      "DocumentUploadRequest" : {
+        "type" : "object",
+        "properties" : {
+          "clientCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Client code"
+          },
+          "agentCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Agent code"
+          },
+          "policyNumber" : {
+            "type" : "string",
+            "description" : "Policy number"
+          },
+          "claimNumber" : {
+            "type" : "string",
+            "description" : "Claim number"
+          },
+          "docType" : {
+            "type" : "string",
+            "description" : "Document type e.g word, pdf"
+          },
+          "documentName" : {
+            "type" : "string",
+            "description" : "Document name, including extension"
+          },
+          "document" : {
+            "type" : "string",
+            "description" : "Document in base64 string"
+          }
+        },
+        "required" : [ "docType", "documentName", "document" ]
+      },
+      "NavisionReceiptingRequest" : {
+        "type" : "object",
+        "properties" : {
+          "policyNo" : {
+            "type" : "string",
+            "description" : "Policy number"
+          },
+          "debitNo" : {
+            "type" : "string",
+            "description" : "Debit note number"
+          },
+          "paymentMode" : {
+            "type" : "string",
+            "description" : "Payment mode",
+            "enum" : [ "Cash", "Cheque" ]
+          },
+          "referenceNo" : {
+            "type" : "string",
+            "description" : "Reference number for the payment mode"
+          },
+          "paymentType" : {
+            "type" : "string",
+            "description" : "Whether the payment is for renewals or new business"
+          },
+          "amount" : {
+            "type" : "number",
+            "format" : "float",
+            "description" : "Receipting amount"
+          },
+          "receiptNo" : {
+            "type" : "string",
+            "description" : "Receipt Number"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "Transaction description/narration"
+          },
+          "payeeName" : {
+            "type" : "string",
+            "description" : "Names of payee"
+          },
+          "transactionDate" : {
+            "type" : "string",
+            "description" : "Transaction date"
+          },
+          "agentCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Agent code to be provided if there is no policy number or debit number"
+          }
+        }
+      },
+      "ReceiptingResponse" : {
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "type" : "string",
+            "description" : "Status message"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "Status"
+          },
+          "certificateDetails" : {
+            "type" : "string",
+            "description" : "Certificate details"
+          }
+        }
+      },
+      "UserTransaction" : {
+        "type" : "object",
+        "properties" : {
+          "transactionType" : {
+            "type" : "string",
+            "description" : "Transaction type",
+            "enum" : [ "Quotation", "Policy", "Authorization", "Claim processing" ]
+          },
+          "transactionDesc" : {
+            "type" : "string",
+            "description" : "Transaction description",
+            "example" : "Make ready"
+          },
+          "transactionDetails" : {
+            "type" : "string",
+            "description" : "Transaction summary details"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "Transaction status",
+            "example" : "approved, pending"
+          }
+        }
+      },
+      "ApproveUserTransactionRequest" : {
+        "type" : "object",
+        "properties" : {
+          "approvType" : {
+            "type" : "string",
+            "description" : "Approval type",
+            "enum" : [ "Approve", "Decline", "Cancel" ]
+          }
+        }
+      },
+      "AuditTrailRequest" : {
+        "type" : "object",
+        "properties" : {
+          "policyNumber" : {
+            "type" : "string",
+            "description" : "Policy number"
+          },
+          "claimNumber" : {
+            "type" : "string",
+            "description" : "Claim number"
+          }
+        }
+      },
+      "AuditTrail" : {
+        "type" : "object",
+        "properties" : {
+          "policyNumber" : {
+            "type" : "string",
+            "description" : "Policy number"
+          },
+          "claimNumber" : {
+            "type" : "string",
+            "description" : "Claim number"
+          },
+          "transNumber" : {
+            "type" : "string",
+            "description" : "Unique Transaction number"
+          },
+          "transType" : {
+            "type" : "string",
+            "description" : "Transaction Type"
+          },
+          "preparedBy" : {
+            "type" : "string",
+            "description" : "Prepared by"
+          },
+          "preparedDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Prepared date"
+          },
+          "confirmedBy" : {
+            "type" : "string",
+            "description" : "Confirmed by"
+          },
+          "confirmedDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Confirmed date"
+          },
+          "authorizedBy" : {
+            "type" : "string",
+            "description" : "Authorized by"
+          },
+          "authorizedDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Authorized date"
+          }
+        }
+      },
+      "UpdateExchangeRateRequest" : {
+        "type" : "object",
+        "properties" : {
+          "curSymbol" : {
+            "type" : "string",
+            "description" : "Currency symbol"
+          },
+          "curRate" : {
+            "type" : "number",
+            "format" : "double",
+            "description" : "Rate of the currency"
+          },
+          "dateFrom" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Valid from date"
+          },
+          "dateTo" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Valid to date"
+          }
+        },
+        "required" : [ "curSymbol", "curRate", "dateFrom", "dateTo" ]
+      },
+      "UpdateExchangeRateResponse" : {
+        "type" : "object",
+        "properties" : {
+          "curCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Code assigned to the currency rate in the Turnquest system"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Status message",
+            "example" : "Exchange rate set successfully"
+          }
+        }
+      },
+      "TreatyRequest" : {
+        "type" : "object",
+        "properties" : {
+          "subClassCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Sub class code"
+          },
+          "treatyYear" : {
+            "type" : "integer",
+            "format" : "int16",
+            "description" : "Reinsurance treaty year"
+          },
+          "curCode" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Treaty currency"
+          }
+        },
+        "required" : [ "subClassCode", "treatyYear", "curCode" ]
+      },
+      "Treaty" : {
+        "type" : "object",
+        "properties" : {
+          "treatyName" : {
+            "type" : "string",
+            "description" : "Treaty name"
+          },
+          "treatyGrossRet" : {
+            "type" : "number",
+            "description" : "Treaty gross retention"
+          },
+          "treatyCapacity" : {
+            "type" : "number",
+            "description" : "Treaty capacity"
+          },
+          "treatyRate" : {
+            "type" : "number",
+            "description" : "Treaty rate"
+          },
+          "treatyType" : {
+            "type" : "string",
+            "description" : "Treaty type"
+          },
+          "retentionAmt" : {
+            "type" : "number",
+            "format" : "float",
+            "description" : "Company retention amount"
+          }
+        }
+      }
+    }
+  }
+}
