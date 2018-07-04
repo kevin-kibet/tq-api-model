@@ -71,7 +71,7 @@ Deploying to  server **10.176.18.13** with an http server(apache or nginx) runni
 Apache or nginx installation points to **/var/www/html/** by default
 Create a directory to deploy the application
 ```
-/var/www/html/printing-service/
+mkdir -p /var/www/html/printing-service/
 ```
 Clone the project:
 ```
@@ -104,6 +104,7 @@ Host: [host]:[port]
 Content-Type: multipart/form-data
 Accept: application/json
 ```
+
 | Field              | Type     | Description                         |
 | -------------------|----------| ------------------------------------|
 | document           | file     | PDF File to print                   |
