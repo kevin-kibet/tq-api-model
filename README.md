@@ -8,6 +8,7 @@ provided web application.
 The Backend is a spring boot application, using gradle as the build system.
 Alternatively, you can obtain an already built jar file from Jenkins(Configuring the pipeline)
 > Coming soon
+
 ##### Building localy
 ###### Prerequisites
 - JDK (At least 1.8)
@@ -55,9 +56,12 @@ Available profiles:
 > coming soon
 
 ##### Building locally
+###### Prerequisites
+- npm
+- Angular
+
 The Frontend is an angular application. To build the application, go ahead to clone it [here](http://10.176.18.27:8080/#/admin/projects/printing-service)
 Then run these commands at the root folder of the project.
-You'll need **npm** and **angular-cli** installed for this case
 ```
 npm install
 ng build --prod --base-href=[full url of the deployment server + path]
