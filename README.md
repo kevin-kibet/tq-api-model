@@ -98,7 +98,7 @@ The service is available through an http endpoint. You make a call to the end-po
 http://[host]:[port]/print-requests
 ```
 #### Request
-```http request
+```
 POST /print-requests HTTP/1.1
 Host: [host]:[port]
 Content-Type: multipart/form-data
@@ -152,5 +152,3 @@ The end point can also be parameterized using **TQC_PARAMS**
 - [x] Setup project in gerrit.
 - [ ] Document.
 - [ ] Configure Jenkins build pipeline.
-
-
