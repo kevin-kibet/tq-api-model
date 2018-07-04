@@ -9,7 +9,7 @@ The Backend is a spring boot application, using gradle as the build system.
 Alternatively, you can obtain an already built jar file from Jenkins(Configuring the pipeline)
 > Coming soon
 
-##### Building localy
+##### Building locally
 ###### Prerequisites
 - JDK (At least 1.8)
 - Gradle
