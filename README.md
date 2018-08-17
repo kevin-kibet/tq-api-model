@@ -6,8 +6,7 @@ provided web application.
 ### Backend
 ##### Using Jenkins
 The Backend is a spring boot application, using gradle as the build system.
-Alternatively, you can obtain an already built jar file from Jenkins(Configuring the pipeline)
-> Coming soon
+You can obtain an already built jar file from Jenkins [here](http://10.176.18.27:8969/job/Printing%20Service)
 
 ##### Building locally
 ###### Prerequisites
@@ -33,7 +32,7 @@ Locate the built jar file in the directory **build/libs/**.
 Once you obtain the jar file, transfer it to your server using an FTP client
 
 ##### Sample deployment
-Deploying to a server with ip **10.176.18.13**.
+Deploying to a server **10.176.18.13**.
 Copy the jar file to the directory **/u01/applications/Spring** using WinSCP
 SSH into the server from the terminal. You can use Putty for windows
 Navigate to the directory where the jar file is located
@@ -155,5 +154,5 @@ The end point can also be parameterized using **TQC_PARAMS**
 
 ## TODO
 - [x] Setup project in gerrit.
-- [ ] Document.
+- [x] Document.
 - [ ] Configure Jenkins build pipeline.
